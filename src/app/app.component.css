@@ -1,0 +1,24 @@
+.bg-red {
+  background-color: red;
+}
+.bg-green {
+  background-color: greenyellow;
+}
+.bg-blue {
+  background-color: darkblue;
+}
+.color-yellow{
+  color: yellow;
+}
+.color-red{
+  color: red;
+}
+.color-brown{
+  color: saddlebrown;
+}
+.redBorder {
+  border: 2px solid red;
+}
+.greenBorder {
+  border: 1px solid greenyellow;
+}
