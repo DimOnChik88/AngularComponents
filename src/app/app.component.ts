@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {NgForm} from "@angular/forms";
+import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -7,10 +7,10 @@ import {NgForm} from "@angular/forms";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  test: string = 'Hi there people';
-  regStatus: boolean = false;
-  logStatus: boolean = false;
-  createHouseStatus: boolean = false;
+  test = 'Hi there people';
+  regStatus = false;
+  logStatus = false;
+  createHouseStatus = false;
 
   user = {
     userID: null,
@@ -24,7 +24,7 @@ export class AppComponent {
     password: ''
   };
   house = {
-    houseId:null,
+    houseId: null,
     city: '',
     square: 0,
     street: '',
@@ -52,11 +52,11 @@ export class AppComponent {
     square: 0,
     street: '',
     price: 0,
-  }
+  };
   searchArray = [];
   arrToShow = [];
   searchStatus = 2;
-  showButtonIndex:number;
+  showButtonIndex: number;
 
 
   onClickRegistration() {
@@ -82,7 +82,7 @@ export class AppComponent {
       }
     }
     if (this.isUserPresent === 2) {
-      console.log('That user was already register.')
+      console.log('That user was already register.');
     } else {
       this.isUserPresent = 1;
       this.arrOfUsers.push(this.user);
@@ -95,6 +95,9 @@ export class AppComponent {
       name: '',
       isBlocked: false
     };
+    setTimeout(() => {
+      this.isUserPresent = 3;
+    }, 1500);
   }
 
   applyLoginForm(loginForm: NgForm) {
@@ -107,7 +110,14 @@ export class AppComponent {
     }
     if (this.isUserPresent === 1) {
       console.log('Welcome');
-    } else this.isUserPresent = 0;
+    } else { this.isUserPresent = 0; }
+    this.userLogin  = {
+      email: '',
+      password: ''
+    };
+    setTimeout(() => {
+      this.isUserPresent = 3;
+    }, 1500);
   }
 
   applyCreateHouseForm(createForm: NgForm) {
@@ -118,13 +128,13 @@ export class AppComponent {
     this.arrOfHouses.push(this.house);
     console.log(this.arrOfHouses);
     this.house = {
-      houseId:null,
+      houseId: null,
       city: '',
       square: 0,
       street: '',
       price: 0,
       owner: this.user
-    }
+    };
   }
 
   applyFindHouse(findForm: NgForm) {
@@ -133,7 +143,7 @@ export class AppComponent {
       if (
         (this.findHouseParams.city === this.arrOfHouses[i].city || this.findHouseParams.city === '') &&
         (this.findHouseParams.street === this.arrOfHouses[i].street || this.findHouseParams.street === '') &&
-        (this.findHouseParams.price === this.arrOfHouses[i].price || this.findHouseParams.price === 0 )&&
+        (this.findHouseParams.price === this.arrOfHouses[i].price || this.findHouseParams.price === 0 ) &&
         (this.findHouseParams.square === this.arrOfHouses[i].square || this.findHouseParams.square === 0)
       ) {
 
@@ -143,7 +153,7 @@ export class AppComponent {
     }
     console.log(findForm);
     console.log(this.searchArray);
-    if(this.searchArray.length < 1) { this.searchStatus = 0}
+    if (this.searchArray.length < 1) { this.searchStatus = 0; }
     this.arrToShow = this.searchArray;
     this.searchArray = [];
     this.findHouseParams = {
@@ -151,7 +161,7 @@ export class AppComponent {
       square: 0,
       street: '',
       price: 0,
-    }
+    };
   }
 
   onShowMore(id: number) {
