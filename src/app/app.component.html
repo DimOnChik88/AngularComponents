@@ -4,124 +4,40 @@
   <button style="flex: 0 1 32%" (click)="onClickCreateHouse()">Create House</button>
 </div>
 
-                              <!--Registration Form-->
-<form *ngIf="regStatus" (ngSubmit)="applyRegisterForm(registerForm)" #registerForm="ngForm" >
+<app-register-component
+  [regStatus] = regStatus
+  [applyRegisterForm] = applyRegisterForm
+  [user]= user
+  [arrOfUsers]= arrOfUsers
+  [isUserPresent]= isUserPresent
+></app-register-component>
 
-  <label
-    [ngStyle]="{color: emailInput.invalid && emailInput.touched? 'red':'black'}">
-       Enter your  email
-  </label>
+<app-login
+  [logStatus] = logStatus
+  [applyLoginForm] = applyLoginForm
+  [userLogin] = userLogin
+  [arrOfUsers] = arrOfUsers
+  [isUserPresent] = isUserPresent
+></app-login>
+<app-create-house
+  [createHouseStatus] = createHouseStatus
+  [applyCreateHouseForm] = applyCreateHouseForm
+  [house] = house
+  [arrOfUsers] = arrOfUsers
+  [arrOfHouses] = arrOfHouses
+></app-create-house>
 
-  <input type="text" name="regEmail" [(ngModel)]="user.email"
-         #emailInput="ngModel"  required email>
-
-
-  <label [ngStyle]="{color: passwordInput.invalid && passwordInput.touched ? 'red':'black'}">
-    Enter password
-  </label>
-
-  <input type="password" name="regPassword" [(ngModel)]="user.password"
-         #passwordInput ="ngModel" minlength="6" required>
-
-  <label [ngStyle]="{color: nameInput.invalid && nameInput.touched? 'red':'black'}">
-    Enter name</label>
-
-  <input type="text" name="regName" [(ngModel)]="user.name"
-         #nameInput ="ngModel" minlength="2" required>
-
-  <button [disabled]="!registerForm.valid">Submit</button>
-
-</form>
-
-                          <!--Login Form-->
-<form *ngIf="logStatus" (ngSubmit)="applyLoginForm(loginForm)" #loginForm="ngForm">
-  <label [ngStyle]="{color: emailInput.invalid && emailInput.touched? 'red':'black'}">
-  Enter your email
-  </label>
-
-    <input type="text" name="logEmail"  [(ngModel)]="userLogin.email"
-           #emailInput ="ngModel" email required>
-  <label [ngStyle]="{color: passwordInput.invalid && passwordInput.touched? 'red':'black'}">
-  Enter password
-  </label>
-
-  <input type="password" name="logPassword" [(ngModel)]="userLogin.password"
-         #passwordInput ="ngModel" minlength="6" required>
-
-  <button [disabled]="!loginForm.valid">Submit</button>
-
-</form>
-
-                          <!--Create House Form-->
-<form *ngIf="createHouseStatus" (ngSubmit)="applyCreateHouseForm(createForm)" #createForm="ngForm" >
-
-  <label
-    [ngStyle]="{color: cityInput.invalid && cityInput.touched? 'red':'black'}">
-    Enter your  city
-  </label>
-
-  <input type="text" name="houseCity" [(ngModel)]="house.city"
-         #cityInput="ngModel"  required minlength="2" >
+<app-search
+  [applyFindHouse] = applyFindHouse
+  [findHouseParams] = "findHouseParams"
+  [arrOfHouses] = "arrOfHouses"
+  [searchArray] = "searchArray"
+  [searchStatus] = "searchStatus"
+  [arrToShow] = "arrToShow"
+  [showButtonIndex] = "showButtonIndex"
+  [onShowMore] = "onShowMore"
+  [onHide] = onHide
+></app-search>
 
 
-  <label [ngStyle]="{color: squareInput.invalid && squareInput.touched ? 'red':'black'}">
-    Enter square
-  </label>
-
-  <input type="number" name="houseSquare" [(ngModel)]="house.square"
-         #squareInput ="ngModel" minlength="2" required>
-
-  <label [ngStyle]="{color: streetInput.invalid && streetInput.touched? 'red':'black'}">
-    Enter street</label>
-
-  <input type="text" name="street" [(ngModel)]="house.street"
-         #streetInput ="ngModel" minlength="2" required>
-
- <label [ngStyle]="{color: priceInput.invalid && priceInput.touched? 'red':'black'}">
-    Enter price</label>
-
-  <input type="number" name="price" [(ngModel)]="house.price"
-         #priceInput ="ngModel" minlength="2" required>
-
-  <button [disabled]="!createForm.valid">Submit</button>
-</form>
-
-<div *ngIf="isUserPresent === 2" [ngStyle]="{backgroundColor:'red'}">That user was already register</div>
-<div *ngIf="isUserPresent === 1" [ngStyle]="{backgroundColor:'green'}">Welcome</div>
-<div *ngIf="isUserPresent === 0" [ngStyle]="{backgroundColor:'red'}">User is not found</div>
-<div ></div>
-
-<div style="margin-top: 100px; text-align: center"> Find House
-  <form style="margin-top: 10px; display: flex; justify-content: space-between"
-        (ngSubmit)="applyFindHouse(findForm)" #findForm="ngForm" >
-
-    <input type="text" name="findCity" [(ngModel)]="findHouseParams.city" placeholder="City" style="flex: 0 1 19%" >
-
-    <input type="number" name="findSquare" [(ngModel)]="findHouseParams.square" title="Square" style="flex: 0 1 19%">
-
-    <input type="text" name="findStreet" [(ngModel)]="findHouseParams.street" placeholder="Street" style="flex: 0 1 19%">
-
-    <input type="number" name="price" [(ngModel)]="findHouseParams.price" title="price" style="flex: 0 1 19%">
-
-    <button style="flex: 0 1 19%">Search</button>
-  </form>
-</div>
-
-<div *ngIf="searchStatus === 1" >
-  <div *ngFor="let houseOfArray of arrToShow">
-    <div [ngClass]="houseOfArray.owner.isBlocked?'redBorder':'greenBorder'">
-      City : {{houseOfArray.city}}<br>
-      Street : {{houseOfArray.street}}<br>
-      <div *ngIf="showButtonIndex===houseOfArray.houseId">
-        Square:{{houseOfArray.square}}<br>
-        Price: {{houseOfArray.price}}<br>
-        Owner: {{houseOfArray.owner.name}}<br>
-        Owner Contact: {{houseOfArray.owner.email}}<br>
-        <button (click)="onHide()">Hide</button>
-    </div>
-    </div>
-    <button (click)="onShowMore(houseOfArray.houseId)" [disabled]="houseOfArray.owner.isBlocked">Show More</button>
-    <br>
-  </div></div>
-<div *ngIf="searchStatus === 0" [ngClass]="'bg-red'">No one find</div>
 

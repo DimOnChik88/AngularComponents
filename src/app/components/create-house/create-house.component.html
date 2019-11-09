@@ -1,0 +1,32 @@
+<form *ngIf="createHouseStatus" (ngSubmit)="applyCreateHouseForm(createForm)" #createForm="ngForm" >
+
+  <label
+    [ngStyle]="{color: cityInput.invalid && cityInput.touched? 'red':'black'}">
+    Enter your  city
+  </label>
+
+  <input type="text" name="houseCity" [(ngModel)]="house.city"
+         #cityInput="ngModel"  required minlength="2" >
+
+
+  <label [ngStyle]="{color: squareInput.invalid && squareInput.touched ? 'red':'black'}">
+    Enter square
+  </label>
+
+  <input type="number" name="houseSquare" [(ngModel)]="house.square"
+         #squareInput ="ngModel" minlength="2" required>
+
+  <label [ngStyle]="{color: streetInput.invalid && streetInput.touched? 'red':'black'}">
+    Enter street</label>
+
+  <input type="text" name="street" [(ngModel)]="house.street"
+         #streetInput ="ngModel" minlength="2" required>
+
+  <label [ngStyle]="{color: priceInput.invalid && priceInput.touched? 'red':'black'}">
+    Enter price</label>
+
+  <input type="number" name="price" [(ngModel)]="house.price"
+         #priceInput ="ngModel" minlength="2" required>
+
+  <button [disabled]="!createForm.valid">Submit</button>
+</form>

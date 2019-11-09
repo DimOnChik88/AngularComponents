@@ -1,0 +1,33 @@
+<div style="margin-top: 100px; text-align: center"> Find House
+  <form style="margin-top: 10px; display: flex; justify-content: space-between"
+        (ngSubmit)="applyFindHouse(findForm)" #findForm="ngForm" >
+
+    <input type="text" name="findCity" [(ngModel)]="findHouseParams.city" placeholder="City" style="flex: 0 1 19%" >
+
+    <input type="number" name="findSquare" [(ngModel)]="findHouseParams.square" title="Square" style="flex: 0 1 19%">
+
+    <input type = "text" name="findStreet" [(ngModel)]="findHouseParams.street" placeholder="Street" style="flex: 0 1 19%">
+
+    <input type="number" name="price" [(ngModel)]="findHouseParams.price" title="price" style="flex: 0 1 19%">
+
+    <button style="flex: 0 1 19%">Search</button>
+  </form>
+</div>
+
+<div *ngIf="searchStatus === 1" >
+  <div *ngFor="let houseOfArray of arrToShow">
+    <div [ngClass]="houseOfArray.owner.isBlocked?'redBorder':'greenBorder'">
+      City : {{houseOfArray.city}}<br>
+      Street : {{houseOfArray.street}}<br>
+      <div *ngIf="showButtonIndex===houseOfArray.houseId">
+        Square:{{houseOfArray.square}}<br>
+        Price: {{houseOfArray.price}} USD or {{houseOfArray.price | exchangePipe}} UAH<br>
+        Owner: {{houseOfArray.owner.name}}<br>
+        Owner Contact: {{houseOfArray.owner.email}}<br>
+        <button (click)="onHide(houseOfArray.houseId)">Hide</button>
+    </div>
+    </div>
+    <button (click)="onShowMore(houseOfArray.houseId)" [disabled]="houseOfArray.owner.isBlocked">Show More</button>
+    <br>
+  </div></div>
+<div *ngIf="searchStatus === 0" [ngClass]="'bg-red'">No one find</div>

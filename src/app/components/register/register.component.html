@@ -1,0 +1,30 @@
+<form *ngIf="regStatus" (ngSubmit)="applyRegisterForm(registerForm)" #registerForm="ngForm" >
+
+  <label
+    [ngStyle]="{color: emailInput.invalid && emailInput.touched? 'red':'black'}">
+    Enter your  email
+  </label>
+
+  <input type="text" name="regEmail" [(ngModel)]="user.email"
+         #emailInput="ngModel"  required email>
+
+
+  <label [ngStyle]="{color: passwordInput.invalid && passwordInput.touched ? 'red':'black'}">
+    Enter password
+  </label>
+
+  <input type="password" name="regPassword" [(ngModel)]="user.password"
+         #passwordInput ="ngModel" minlength="6" required>
+
+  <label [ngStyle]="{color: nameInput.invalid && nameInput.touched? 'red':'black'}">
+    Enter name</label>
+
+  <input type="text" name="regName" [(ngModel)]="user.name"
+         #nameInput ="ngModel" minlength="2" required>
+
+  <button [disabled]="!registerForm.valid">Submit</button>
+
+</form>
+
+<div *ngIf="isUserPresent === 2" [ngStyle]="{backgroundColor:'red'}">That user was already register</div>
+<div *ngIf="isUserPresent === 1" [ngStyle]="{backgroundColor:'green'}">Welcome</div>

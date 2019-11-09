@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {NgForm} from '@angular/forms';
+import {logger} from 'codelyzer/util/logger';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +12,7 @@ export class AppComponent {
   regStatus = false;
   logStatus = false;
   createHouseStatus = false;
+  exchange =  fetch('https://api.privatbank.ua/p24api/pubinfo?exchange&json&coursid=11');
 
   user = {
     userID: null,
@@ -31,13 +33,30 @@ export class AppComponent {
     price: 0,
     owner: this.user
   };
-  arrOfUsers = [{
-    userID: 0,
-    email: 'IvanPupkin@gmail.com',
-    password: 'pupochkin',
-    name: 'Ivan',
-    isBlocked: false
-  }];
+  arrOfUsers = [
+    {
+      userID: 0,
+      email: 'IvanPupkin@gmail.com',
+      password: 'pupochkin',
+      name: 'Ivan',
+      isBlocked: false
+    },
+    {
+      userID: 1,
+      email: 'GiganLimon@gmail.com',
+      password: 'pupochkin',
+      name: 'Gigan',
+      isBlocked: true
+    },
+    {
+      userID: 2,
+      email: 'Romko@gmail.com',
+      password: 'pupochkin',
+      name: 'Romko',
+      isBlocked: false
+    },
+  ];
+
   arrOfHouses = [{
     houseId: 0,
     city: 'Lviv',
@@ -45,7 +64,17 @@ export class AppComponent {
     street: 'Suhiv',
     price: 50000,
     owner: this.arrOfUsers[0]
-  }];
+  },
+  {
+    houseId: 1,
+    city: 'Kiiv',
+    square: 67,
+    street: 'Hreschatyk',
+    price: 80000,
+    owner: this.arrOfUsers[0]
+  },
+
+  ];
   isUserPresent = 3;
   findHouseParams = {
     city: '',
@@ -101,16 +130,19 @@ export class AppComponent {
   }
 
   applyLoginForm(loginForm: NgForm) {
+    console.log(loginForm);
     console.log(this.userLogin);
     for (let i = 0; i < this.arrOfUsers.length; i++) {
-      if (this.userLogin.password === this.arrOfUsers[i].password &&
-        this.userLogin.email === this.arrOfUsers[i].email) {
+      if (this.arrOfUsers[i].password === this.userLogin.password &&
+        this.arrOfUsers[i].email === this.userLogin.email) {
         return this.isUserPresent = 1;
       }
     }
     if (this.isUserPresent === 1) {
       console.log('Welcome');
-    } else { this.isUserPresent = 0; }
+    } else {
+      this.isUserPresent = 0;
+    }
     this.userLogin  = {
       email: '',
       password: ''

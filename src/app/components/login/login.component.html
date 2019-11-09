@@ -1,0 +1,20 @@
+<form *ngIf="logStatus" (ngSubmit)="applyLoginForm(loginForm)" #loginForm="ngForm">
+  <label [ngStyle]="{color: emailInput.invalid && emailInput.touched? 'red':'black'}">
+    Enter your email
+  </label>
+
+  <input type="text" name="logEmail"  [(ngModel)]="userLogin.email"
+         #emailInput ="ngModel" email required>
+  <label [ngStyle]="{color: passwordInput.invalid && passwordInput.touched? 'red':'black'}">
+    Enter password
+  </label>
+
+  <input type="password" name="logPassword" [(ngModel)]="userLogin.password"
+         #passwordInput ="ngModel" minlength="6" required>
+
+  <button [disabled]="!loginForm.valid">Submit</button>
+
+</form>
+
+<div *ngIf="isUserPresent === 1" [ngStyle]="{backgroundColor:'green'}">Welcome</div>
+<div *ngIf="isUserPresent === 0" [ngStyle]="{backgroundColor:'red'}">User is not found</div>
